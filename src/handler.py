@@ -42,7 +42,7 @@ def run_inference(inference_request):
     ep = inference_request.get("endpoint", "/txt2img")
     payload = inference_request.get("payload", "")
 
-    response = automatic_session.post(url=f'{LOCAL_URL}'+"ep",
+    response = automatic_session.post(url=f'{LOCAL_URL}'+ep,
                                       json=payload, timeout=600)
     return response.json()
 
