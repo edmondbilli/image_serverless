@@ -41,9 +41,9 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 RUN apt-get update && apt-get install -y git-lfs && git lfs install
 # RUN git clone https://huggingface.co/lantuzi/automatic1111_files /automatic1111_files
 # Copy to the proper A1111 structure
-RUN cp -r ./automatic1111_files/models/ControlNet /stable-diffusion-webui/models/ControlNet
-RUN cp -r ./automatic1111_files/embeddings /stable-diffusion-webui/embeddings
-RUN cp -r ./automatic1111_files/extensions /stable-diffusion-webui/extensions
+RUN cp -r automatic1111_files/models/ /stable-diffusion-webui/models/
+RUN cp -r automatic1111_files/embeddings /stable-diffusion-webui/embeddings
+RUN cp -r automatic1111_files/extensions /stable-diffusion-webui/extensions
 # RUN rm -rf /automatic1111_files
 
 # install dependencies
