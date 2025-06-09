@@ -35,7 +35,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements_versions.txt && \
     python -c "from launch import prepare_environment; prepare_environment()" --skip-torch-cuda-test
 
-COPY --from=download /model.safetensors /model.safetensors
+# COPY --from=download /model.safetensors /model.safetensors
 
 RUN apt-get update && apt-get install -y git-lfs && git lfs install
 RUN git clone https://huggingface.co/lantuzi/automatic1111_files /automatic1111_files
