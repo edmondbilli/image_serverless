@@ -17,7 +17,7 @@ python /stable-diffusion-webui/webui.py \
   --disable-safe-unpickle \
   --port 3000 \
   --api \
-  --nowebui \
+  # --nowebui \
   --skip-version-check \
   --no-hashing \
   --no-download-sd-model &
