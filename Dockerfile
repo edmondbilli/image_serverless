@@ -25,7 +25,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get update && \
     apt install -y \
-    fonts-dejavu-core rsync git jq moreutils aria2 wget libgoogle-perftools-dev libtcmalloc-minimal4 procps libgl1 libglib2.0-0 python3-dev && \
+    fonts-dejavu-core rsync git jq moreutils aria2 wget libgoogle-perftools-dev libtcmalloc-minimal4 procps libgl1 libglib2.0-0 build-essential libssl-dev libffi-dev python3-dev -y && \
     apt-get autoremove -y && rm -rf /var/lib/apt/lists/* && apt-get clean -y
 
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -37,6 +37,10 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     python -c "from launch import prepare_environment; prepare_environment()" --skip-torch-cuda-test
 
 
+# install dependencies
+COPY requirements.txt .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir -r requirements.txt
 
 
 # COPY --from=download /model.safetensors /model.safetensors
@@ -51,10 +55,6 @@ COPY automatic1111_files/embeddings /stable-diffusion-webui/embeddings
 COPY automatic1111_files/extensions /stable-diffusion-webui/extensions
 # RUN rm -rf /automatic1111_files
 
-# install dependencies
-COPY requirements.txt .
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir -r requirements.txt
 
 COPY test_input.json .
 
