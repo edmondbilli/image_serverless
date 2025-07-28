@@ -25,7 +25,7 @@ SHELL ["/bin/bash", "-o", "pipefail", "-c"]
 
 RUN apt-get update && \
     apt install -y \
-    fonts-dejavu-core rsync git jq moreutils aria2 wget libgoogle-perftools-dev libtcmalloc-minimal4 procps libgl1 libglib2.0-0 python3.10-dev && \
+    fonts-dejavu-core rsync git jq moreutils aria2 wget libgoogle-perftools-dev libtcmalloc-minimal4 procps libgl1 libglib2.0-0 python3-dev && \
     apt-get autoremove -y && rm -rf /var/lib/apt/lists/* && apt-get clean -y
 
 RUN --mount=type=cache,target=/root/.cache/pip \
@@ -38,10 +38,7 @@ RUN --mount=type=cache,target=/root/.cache/pip \
 
 
 
-# install dependencies
-COPY requirements.txt .
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir -r requirements.txt
+
 # COPY --from=download /model.safetensors /model.safetensors
 
 # RUN apt-get update && apt-get install -y git-lfs && git lfs install
@@ -54,7 +51,10 @@ COPY automatic1111_files/embeddings /stable-diffusion-webui/embeddings
 COPY automatic1111_files/extensions /stable-diffusion-webui/extensions
 # RUN rm -rf /automatic1111_files
 
-
+# install dependencies
+COPY requirements.txt .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir -r requirements.txt
 
 COPY test_input.json .
 
