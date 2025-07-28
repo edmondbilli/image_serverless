@@ -36,6 +36,12 @@ RUN --mount=type=cache,target=/root/.cache/pip \
     pip install -r requirements_versions.txt && \
     python -c "from launch import prepare_environment; prepare_environment()" --skip-torch-cuda-test
 
+
+
+# install dependencies
+COPY requirements.txt .
+RUN --mount=type=cache,target=/root/.cache/pip \
+    pip install --no-cache-dir -r requirements.txt
 # COPY --from=download /model.safetensors /model.safetensors
 
 # RUN apt-get update && apt-get install -y git-lfs && git lfs install
@@ -48,10 +54,7 @@ COPY automatic1111_files/embeddings /stable-diffusion-webui/embeddings
 COPY automatic1111_files/extensions /stable-diffusion-webui/extensions
 # RUN rm -rf /automatic1111_files
 
-# install dependencies
-COPY requirements.txt .
-RUN --mount=type=cache,target=/root/.cache/pip \
-    pip install --no-cache-dir -r requirements.txt
+
 
 COPY test_input.json .
 
